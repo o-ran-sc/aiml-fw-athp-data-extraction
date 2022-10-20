@@ -154,7 +154,7 @@ def delete_task_status(task_id):
 def async_code_worker():
     """
     AsyncCode Worker
-    Infinte loop which will will retrive and process tasks assigned for executing data extraction
+    Infinite loop which will retrive and process tasks assigned for executing data extraction
     """
     while True:
         try:
