@@ -16,6 +16,7 @@
 #
 # ==================================================================================
 #Base Image
+FROM nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-ubuntu18-c-go:1.9.0 as ubuntu
 FROM ubuntu:18.04
 
 # location in the container
@@ -47,4 +48,4 @@ COPY . .
 RUN pip3 install -r requirements.txt
 
 #Expose the ports
-EXPOSE 5000
+EXPOSE 32000
