@@ -1,0 +1,12 @@
+pytest-cov
+python-dotenv
+pyspark
+cassandra-driver==3.25.0
+jsonpickle==2.0.0
+Flask==2.0.1
+Flask-API==3.0.post1
+Flask-RESTful==0.3.9
+lru-dict==1.1.7
+influxdb_client
+mock
+pandas

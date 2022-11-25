@@ -49,7 +49,11 @@ class ConfigHelper(metaclass=Singleton):
         try:
 
             self.exec_path = os.getenv('CODE_DIR_PATH')
-            self.tm_logger = TMLogger("../config/log_config.yaml")
+            
+            if self.exec_path is None:
+                self.tm_logger = TMLogger("../config/log_config.yaml")
+            else:
+                self.tm_logger = TMLogger(self.exec_path + "/log_config.yaml")
 
 
             self.logger = self.tm_logger.logger

@@ -41,6 +41,7 @@ session_helper = sparkSessionManager()
 factory = FeatureEngineeringFactory(session_helper)
 tasks = queue.Queue()
 task_map = {}
+infinte_loop_config={"infinte_run":"True", "unit_test_mode":"False"}
 
 class task():
     """
@@ -156,7 +157,7 @@ def async_code_worker():
     AsyncCode Worker
     Infinite loop which will retrive and process tasks assigned for executing data extraction
     """
-    while True:
+    while infinte_loop_config["infinte_run"] == "True":
         try:
             start_time = datetime.datetime.now()
             logger.debug(str(start_time) +"Feature Engineering Pipeline Started")
@@ -185,6 +186,9 @@ def async_code_worker():
             api_result_msg = str(exc)
             task_map[task_id].status = "Error"
             task_map[task_id].error = api_result_msg
+        if infinte_loop_config["unit_test_mode"] == "True":
+            infinte_loop_config["infinte_run"] = "False"
+            logger.debug(infinte_loop_config)
 if __name__ == "__main__":
     print("******Initiaizing feature store API ******" )
     threading.Thread(target=async_code_worker, daemon=True).start()
