@@ -45,6 +45,7 @@ class TMLogger(object):# pylint: disable=too-few-public-methods
         except FileNotFoundError as err:
             print("error opening yaml config file")
             print(err)
+            raise Exception("error opening yaml config file")
 
     @property
     def get_logger(self):

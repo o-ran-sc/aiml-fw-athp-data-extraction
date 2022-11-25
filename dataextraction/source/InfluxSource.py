@@ -28,21 +28,6 @@ class InfluxSource(Source):
     """
     @Class : Influx DB Source
     """
-    def __init__(self):
-        """
-        @No Args Constructore
-        """
-        super().__init__()
-        self.logger  = None
-        self.classconfig  = None
-        self.url     = None
-        self.token   = None
-        self.org     = None
-        self.timeout = None
-        self.ssl     = None
-        self.query = None
-        
-        
     def __init__(self,classflavour):
         """
         @Method: Single Arg Constructor
