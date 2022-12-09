@@ -1,0 +1,8 @@
+Verified+1: ORAN Jobbuilder <releng+oran-jobbuilder@linuxfoundation.org>
+Verified+1: Ashish Jain <jain.ashish@samsung.com>
+Code-Review+2: Ashish Jain <jain.ashish@samsung.com>
+Submitted-by: Ashish Jain <jain.ashish@samsung.com>
+Submitted-at: Fri, 09 Dec 2022 04:49:41 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/aiml-fw/athp/data-extraction/+/10023
+Project: aiml-fw/athp/data-extraction
+Branch: refs/heads/master
