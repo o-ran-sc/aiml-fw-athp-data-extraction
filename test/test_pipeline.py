@@ -25,7 +25,7 @@ sys.path.extend(["dataextraction/"])
 
 from Pipeline import Pipeline
 from FeatureEngineeringFactory import FeatureEngineeringFactory
-from SparkHelper import sparkSessionManager
+from SparkHelper import SparkSessionManager
 
 
 
@@ -48,10 +48,10 @@ class Test_Pipeline:
         api_json = {'source': {'InfluxSource': {'query': 'from(bucket:"UEData") |> range(start: 0, stop: now()) |> filter(fn: (r) => r._measurement == "liveCell") |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")'}}, 'transform': [{'operation': 'SQLTransform', 'FeatureList': '*', 'SQLFilter': ''}], 'sink': {'CassandraSink': {'CollectionName': 'last_check4'}}}
         load_dotenv('test/test_env.env')
         os.environ['CODE_DIR_PATH'] = 'test'
-        session_helper = sparkSessionManager()
+        session_helper = SparkSessionManager()
         factory = FeatureEngineeringFactory(session_helper)
         (source_dict, transform_dict, sink_dict) = (api_json['source'], api_json['transform'], api_json['sink'])
-        self.obj = factory.getBatchPipeline(source_dict, transform_dict, sink_dict, str(source_dict) + str(transform_dict) + str(sink_dict))
+        self.obj = factory.get_batch_pipeline(source_dict, transform_dict, sink_dict, str(source_dict) + str(transform_dict) + str(sink_dict))
         self.spark_session = session_helper
 
     
@@ -60,27 +60,27 @@ class Test_Pipeline:
 
         
 
-    def test_loadData(self):
+    def test_load_data(self):
         assert self.obj != None, 'Pipeline Object Creation, Failed'
         self.obj.sources[0] = helper()
-        self.obj.loadData(self.spark_session )
+        self.obj.load_data(self.spark_session )
         assert self.obj.spark_dflist == 'Data Load Completed', 'Data Load Failed'
 
-    def test_transformData(self):
+    def test_transform_data(self):
         self.obj.transformers[0] = helper()
-        self.obj.transformData(self.spark_session)
+        self.obj.transform_data(self.spark_session)
 
         assert self.obj.transformed_df == 'Data Transform Completed', 'Data Transform Failed'
 
-    def test_transformDataWithNoTransform(self):
+    def test_transform_data_with_no_transform(self):
         self.obj.transformers = None
         self.obj.spark_dflist = 'Data Transform Completed'
-        self.obj.transformData(self.spark_session)
+        self.obj.transform_data(self.spark_session)
         assert self.obj.transformed_df == 'Data Transform Completed', 'Data Transform Failed When No Transformer is specified'
 
-    def test_writeData(self):
+    def test_write_data(self):
         self.obj.sinks[0] = helper()
-        self.obj.writeData(self.spark_session)
+        self.obj.write_data(self.spark_session)
         assert True
 
 

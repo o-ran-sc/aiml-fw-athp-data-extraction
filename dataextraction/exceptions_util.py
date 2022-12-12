@@ -16,28 +16,31 @@
 #
 # ==================================================================================
 
-"""
-@Module Base
-"""
-from abc import abstractmethod
-class Sink():
+class DataExtractionException(Exception):
     """
-    @Class Sink Base Class
+    A class used to represent an Data Extraction exception
+
+    Attributes
+    ----------
+    message : str
+        a formatted string to print out what is exception
+    code : int
+        http status code
     """
-    def __init__(self):
+
+    def __init__(self, code, message="exception occured"):
         """
-        @Method": No Args Constructor
-        """
-        self.class_type="Custom"
-    @abstractmethod
-    def init(self, sparkhelper, confighelper, inputdict):
-        """
-        @Methond: astract
-        """
-    @abstractmethod
-    def write(self, sparksession, sparkdf):
-        """
-        @Method: write
-        @inputs: sparksession, sparkdf
+        Parameters
+        ----------
+        message : str
+            a formatted string to print out what is exception
+        code : int
+            http statuse code
+
         """
         
+        self.code = code
+        self.message = message
+        super().__init__(self.message)
+
+

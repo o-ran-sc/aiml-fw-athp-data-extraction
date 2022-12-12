@@ -28,7 +28,7 @@ class Source():
         """
         @Constructor No Args
         """
-        self.ClassType="Custom"
+        self.class_type="Custom"
     @abstractmethod
     def init(self,sparkhelper,confighelper,inputdict):
         """

@@ -32,7 +32,7 @@ class sparkSessionHelper():
     def __init__(self):
         pass
 
-    def addConf(self, key, value):
+    def add_conf(self, key, value):
         pass
 
 class df_helper():

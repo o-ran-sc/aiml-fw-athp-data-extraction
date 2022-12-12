@@ -24,6 +24,7 @@ import collections
 import os
 import re
 from tmgr_logger import TMLogger
+from exceptions_util import DataExtractionException
 
 
 class Singleton(type):
@@ -57,7 +58,7 @@ class ConfigHelper(metaclass=Singleton):
 
 
             self.logger = self.tm_logger.logger
-            self.log_level = self.tm_logger.LogLevel
+            self.log_level = self.tm_logger.log_level
             self.logger.debug("+++++++++++++++Initializaing Config Helper +++++++++++++++++++++++")
             self.logger.debug(str(self.exec_path))
             self.fs_dict ={}
@@ -95,7 +96,7 @@ class ConfigHelper(metaclass=Singleton):
                 self.logger.debug("Getting Env Variables for: " + baseclassname)
                 value=os.getenv(self.envconfig_file[key])
                 if value is None:
-                    raise Exception("Error Environment Variable Not Set"+self.envconfig_file[key] )
+                    raise DataExtractionException("Error Environment Variable Not Set"+self.envconfig_file[key] )
                 self.envconfig[key]=value
                 self.logger.debug("Read Environment Config var: "+self.envconfig_file[key])
         except Exception as exc:
@@ -120,9 +121,9 @@ class ConfigHelper(metaclass=Singleton):
         """
         try:
             classflavour = "Error"
-            if my_classinstance.ClassType == "Default":
+            if my_classinstance.class_type == "Default":
                 classflavour = my_classinstance.flavour
-            elif my_classinstance.ClassType == "Custom":
+            elif my_classinstance.class_type == "Custom":
                 classflavour = my_classinstance.__class__.__name__
             baseclass=my_classinstance.__class__.__base__.__name__
             self.logger.debug("baseclass is Set to "+baseclass)
@@ -132,8 +133,8 @@ class ConfigHelper(metaclass=Singleton):
             self.logger.debug("Source basic properties:" + str(source_props))
             
             source_props_dict = self.__InjectEnvValues(source_props)
-            if ((source_props_dict["ClassType"] == "Default" or
-                    source_props_dict["ClassType"] == "Custom" ) 
+            if ((source_props_dict["class_type"] == "Default" or
+                    source_props_dict["class_type"] == "Custom" ) 
                     and baseclass != "Transform" and classflavour != 'InfluxSource'):
                 injectedconfigsparkconf= self.\
                 __InjectEnvValues(configsource[classflavour+".SparkConf"])
@@ -154,7 +155,7 @@ class ConfigHelper(metaclass=Singleton):
         try:
             config = self.getConfigSource(baseclassname)
             test= config[my_classname]
-            if test["ClassType"] == "Default":
+            if test["class_type"] == "Default":
                 return True
             return False
         except Exception as exp:
@@ -202,14 +203,14 @@ class ConfigHelper(metaclass=Singleton):
         try:
             for key in configdict:
                 string = configdict[key]
-                matchlist=re.findall(r'\$ENV\{[a-zA-Z_0-9]*\}',string)
+                matchlist=re.findall(r'\$ENV\{\w*\}',string) # \w stands for [a-zA-Z_0-9]
                 self.logger.debug("Injecting Env Values for,key-value " + key + " " + string )
                 for replacestr in matchlist:
                     envkey= replacestr[5:-1]
                     envkey =envkey.lower()
                     replacevalue = self.envconfig[envkey]
                     if replacevalue is None or not isinstance(replacevalue,str):
-                        raise Exception("environment variable Not found"\
+                        raise DataExtractionException("environment variable Not found"\
                                         +self.envconfig_file[envkey])
                     string = string.replace(replacestr,replacevalue)
                 configdict[key] = string

@@ -29,7 +29,7 @@ class Transform():
         """
         @Method: No Args Constructor
         """
-        self.ClassType="Custom"
+        self.class_type="Custom"
     @abstractmethod
     def init(self, sparkhelper, confighelper, inputdict):
         """

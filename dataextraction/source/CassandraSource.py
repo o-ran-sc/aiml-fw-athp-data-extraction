@@ -31,7 +31,7 @@ class CassandraSource(Source):
         """
         @Method: Single Arg Constructor
         """
-        self.ClassType="Custom"
+        self.class_type="Custom"
         self.flavour=classflavour
         self.logger=None
         self.sparkloadkey=None
@@ -45,12 +45,10 @@ class CassandraSource(Source):
         self.logger = confighelper.getLogger()
         self.logger.debug("Set Cassandra Class Spark Source Flavor: " + self.flavour)
         classconfig,sparkconfig  = confighelper.getClassConfig(self)
-        envConf = confighelper.getEnvConfig()
-        
-        
+        env_conf = confighelper.getEnvConfig()
         self.sparkloadkey = classconfig["SparkLoadKey"]
-        self.keyspace  = envConf['cassandra_sourcedb']
-        self.table = envConf['cassandra_sourcetable']
+        self.keyspace  = env_conf['cassandra_sourcedb']
+        self.table = env_conf['cassandra_sourcetable']
         
         self.logger.debug("Source keyspace:" +  str(self.keyspace) + " table-" + str(self.table))
         
@@ -59,9 +57,9 @@ class CassandraSource(Source):
             value = sparkconfig[key]
             if value.startswith('$Input$'):
                 inputkey = value[7:]
-                sparkhelper.addConf(key,inputdict[inputkey])
+                sparkhelper.add_conf(key,inputdict[inputkey])
             else:
-                sparkhelper.addConf(key,value)
+                sparkhelper.add_conf(key,value)
             
         self.logger.debug("Spark cassandra source initialized as" + self.flavour)
 

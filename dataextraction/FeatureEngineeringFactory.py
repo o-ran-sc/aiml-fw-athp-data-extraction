@@ -62,7 +62,7 @@ class FeatureEngineeringFactory():
             self.logger.debug("Class to be imported " + import_class)
             my_class = getattr(importlib.import_module(import_class), my_classorflavour)
             my_classinstance = my_class(my_classorflavour)
-        elif default:
+        else:
             self.logger.debug("Module Name "+self.modulename)
             self.logger.debug("default Class Name "+self.default_class)
             my_class = getattr(importlib.import_module(self.modulename+"."+self.default_class), self.default_class)
@@ -95,7 +95,7 @@ class FeatureEngineeringFactory():
         return my_instancelist
         
         
-    def getBatchPipeline(self, source_classdict, transform_classdict, sink_classdict, caching_key):
+    def get_batch_pipeline(self, source_classdict, transform_classdict, sink_classdict, caching_key):
         """
         @Function: Makes to get Batch Pipeline
         @ Input  : source Classess, Sink Classess, Transform Classess

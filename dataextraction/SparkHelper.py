@@ -24,7 +24,7 @@ from pyspark import SparkConf
 from pyspark.sql import SparkSession
 from ConfigHelper import ConfigHelper
 
-class sparkSessionManager():
+class SparkSessionManager():
     """
     @Module:Spark Session Manager
     """
@@ -48,16 +48,16 @@ class sparkSessionManager():
             self.loglevel = base["Override_Log_Level"]
         self.sconf = SparkConf()
         self.addtionalconfig = config["ExtraConfig"]
-    def addConf(self, key, value):
+    def add_conf(self, key, value):
         """
         @Function: Adding configuration as runtime
         """
         self.sconf.set(key, value)
         
-    def getAllConf(self):
+    def get_all_conf(self):
         self.logger.debug("*********** ALL CONF *** " + str(self.sconf.getAll()))
     
-    def getSession(self):
+    def get_session(self):
         """
         @Function: get Spark Session
         """

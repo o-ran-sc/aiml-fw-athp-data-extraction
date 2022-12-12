@@ -43,11 +43,9 @@ class CassandraSink(Sink):
         @Methond: Constructor
         @Input : classflavor
         """
-        self.ClassType = "Custom"
+        self.class_type = "Custom"
         self.flavour = classflavour
         self.logger = None
-        classconfig = None
-        sparkconfig = None
         self.sparkloadkey = None
         self.writetype = None
         self.tableName = None
@@ -68,13 +66,13 @@ class CassandraSink(Sink):
 
         self.tableName = inputdict["CollectionName"]
         classconfig, sparkconfig = confighelper.getClassConfig(self)
-        envConf = confighelper.getEnvConfig()
+        env_conf = confighelper.getEnvConfig()
 
-        self.keyspace = envConf["cassandra_sinkdb"]
-        self.host = envConf["fs_db_ip"]
-        self.port = envConf["fs_db_port"]
-        self.user = envConf["fs_db_user"]
-        self.passw = envConf["fs_db_password"]
+        self.keyspace = env_conf["cassandra_sinkdb"]
+        self.host = env_conf["fs_db_ip"]
+        self.port = env_conf["fs_db_port"]
+        self.user = env_conf["fs_db_user"]
+        self.passw = env_conf["fs_db_password"]
 
         self.sparkloadkey = classconfig["SparkLoadKey"]
         self.writetype = classconfig["WriteMode"]
@@ -88,9 +86,9 @@ class CassandraSink(Sink):
             print("Spark Config", key, sparkconfig[key])
             if value.startswith("$Input$"):
                 inputkey = value[7:]
-                sparkhelper.addConf(key, inputdict[inputkey])
+                sparkhelper.add_conf(key, inputdict[inputkey])
             else:
-                sparkhelper.addConf(key, value)
+                sparkhelper.add_conf(key, value)
 
     def write(self, sparksession, sparkdf):
         """
@@ -140,7 +138,7 @@ class CassandraSink(Sink):
         session = cluster.connect(self.keyspace)
         
         
-        session.execute(self.buildDeleteTable(sparkdf))
+        session.execute(self.buildDeleteTable())
         
         query = self.buildCreateTable(sparkdf)
         session.execute(query)
@@ -165,7 +163,7 @@ class CassandraSink(Sink):
         self.logger.debug("Create table query " + query)
         return query
 
-    def buildDeleteTable(self, sparkdf):
+    def buildDeleteTable(self):
         """
         Builds simple cassandra query for deleting table
         """
@@ -175,7 +173,7 @@ class CassandraSink(Sink):
 
     def buildKeyspaceQuery(self, keyspace):
         """
-        Builds cassandra query for creating keyspace
+        Builds cassandra query for creating keyspace 1
         """
         query = (
             "CREATE KEYSPACE IF NOT EXISTS "

@@ -31,19 +31,20 @@ import jsonpickle
 from flask import Flask
 from flask_restful import  request
 from flask_api import status
-from SparkHelper import sparkSessionManager
+from SparkHelper import SparkSessionManager
 from ConfigHelper import ConfigHelper
 from FeatureEngineeringFactory import FeatureEngineeringFactory
 
 fsConf = ConfigHelper()
 logger = fsConf.getLogger()
-session_helper = sparkSessionManager()
+session_helper = SparkSessionManager()
 factory = FeatureEngineeringFactory(session_helper)
 tasks = queue.Queue()
 task_map = {}
 infinte_loop_config={"infinte_run":"True", "unit_test_mode":"False"}
+default_mime_type = 'application/json'
 
-class task():
+class Task():
     """
     Task Class
     """
@@ -84,7 +85,7 @@ def post_handle():
         api_result_msg = "/task-status/"+task_id
         logger.debug("Generated ID"+task_id)
         tasks.put(task_id)
-        task_map[task_id] = task(request_json ,"Accepted")
+        task_map[task_id] = Task(request_json ,"Accepted")
         logger.debug("Generated ID"+task_id)
     except Exception as exc:
         api_result_msg = str(exc)
@@ -96,7 +97,7 @@ def post_handle():
             dumps(\
         { "trainingjob_name":request_json["sink"]["CassandraSink"]["CollectionName"],\
         "result" : api_result_msg }),\
-        status= response_code,mimetype='application/json')
+        status= response_code,mimetype=default_mime_type)
     end_time = datetime.datetime.now()
     logger.info(str(end_time-start_time)+' API call finished')
     return response
@@ -119,7 +120,7 @@ def get_task_status(task_id):
 
     response = app.response_class(response=json.dumps(
         { "task_status":taskstatus,"result" : api_result_msg }),
-        status= response_code,mimetype='application/json')
+        status= response_code,mimetype=default_mime_type)
     return response
 @app.route('/task-statuses', methods=['GET'])
 def get_task_statuses():
@@ -134,7 +135,7 @@ def get_task_statuses():
         response = str(exc)
 
     response = app.response_class(response,
-        status= response_code,mimetype='application/json')
+        status= response_code,mimetype=default_mime_type)
     return response
 @app.route('/delete-task-status/<task_id>', methods=['DELETE'])
 def delete_task_status(task_id):
@@ -149,7 +150,7 @@ def delete_task_status(task_id):
     except Exception as exc:
         response_code = status.HTTP_500_INTERNAL_SERVER_ERROR
         api_result_msg = str(exc)
-    response = app.response_class(response=json.dumps({ "trainingjob_name": task_id,"result" : api_result_msg }),        status= response_code,mimetype='application/json')
+    response = app.response_class(response=json.dumps({ "trainingjob_name": task_id,"result" : api_result_msg }), status= response_code,mimetype = default_mime_type)
     return response
     
 def async_code_worker():
@@ -160,7 +161,7 @@ def async_code_worker():
     while infinte_loop_config["infinte_run"] == "True":
         try:
             start_time = datetime.datetime.now()
-            logger.debug(str(start_time) +"Feature Engineering Pipeline Started")
+            logger.debug(str(start_time) +"Feature Engineering Pipeline Started |-> tESTING IN Progress V2")
             task_id = tasks.get()
             request_json = task_map[task_id].task
             task_map[task_id].status = "In Progress"
@@ -169,16 +170,16 @@ def async_code_worker():
             sink_dict = request_json["sink"]
             c_key = str(source_dict)+str(transform_dict)+str(sink_dict)
             logger.debug(c_key)
-            feature_engineering_pipeline = factory.getBatchPipeline(source_dict, transform_dict, sink_dict, c_key)
-            session = session_helper.getSession()
-            feature_engineering_pipeline.loadData(session)
-            feature_engineering_pipeline.transformData(session)
-            feature_engineering_pipeline.writeData(session)
+            feature_engineering_pipeline = factory.get_batch_pipeline(source_dict, transform_dict, sink_dict, c_key)
+            session = session_helper.get_session()
+            feature_engineering_pipeline.load_data(session)
+            feature_engineering_pipeline.transform_data(session)
+            feature_engineering_pipeline.write_data(session)
             session_helper.stop()
             task_map[task_id].status = "Completed"
             tasks.task_done()
             end_time = datetime.datetime.now()
-            logger.debug(str(end_time) +"Feature Engineering Pipline Ended")
+            logger.debug(str(end_time) +"Feature Engineering Pipline Ended |-> tESTING IN Progress V2")
         except Exception as exc:
             session_helper.stop()
             traceback.print_exc()

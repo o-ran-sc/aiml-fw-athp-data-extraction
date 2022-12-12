@@ -29,7 +29,7 @@ class DefaultSparkSource(Source):
         """
         @Method: Single Arg Constructor
         """
-        self.ClassType="Default"
+        self.class_type="Default"
         self.flavour=classflavour
         self.logger=None
         self.sparkloadkey=None
@@ -47,9 +47,9 @@ class DefaultSparkSource(Source):
             value = sparkconfig[key]
             if value.startswith('$Input$'):
                 inputkey = value[7:]
-                sparkhelper.addConf(key,inputdict[inputkey])
+                sparkhelper.add_conf(key,inputdict[inputkey])
             else:
-                sparkhelper.addConf(key,value)
+                sparkhelper.add_conf(key,value)
         self.logger.debug("Spark Default Source Initialized as"+self.flavour)
     def load(self,sparksession):
         """

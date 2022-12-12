@@ -28,7 +28,7 @@ class DefaultSparkTransform(Transform):
         """
         @Method:constructor
         """
-        self.ClassType="Default"
+        self.class_type="Default"
         self.flavour=classflavour
     def init(self,sparkhelper, confighelper,inputdict):
         """

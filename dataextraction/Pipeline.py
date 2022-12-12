@@ -36,14 +36,14 @@ class Pipeline():
         self.logger.debug("Pipeline Created")
         self.spark_dflist = None
         self.transformed_df = None
-    def loadData(self, session):
+    def load_data(self, session):
         """
         @Function: Loads data from source
         """
         self.logger.info("Source:" + str(self.sources[0]))
         self.spark_dflist = self.sources[0].load(session)
         self.logger.info("Data Load Completed")
-    def transformData(self, session):
+    def transform_data(self, session):
         """
         @Function : Transform Data
         """
@@ -52,7 +52,7 @@ class Pipeline():
         else:
             self.transformed_df = self.transformers[0].transform(session, self.spark_dflist)
         self.logger.info("Data Transform Completed")
-    def writeData(self, session):
+    def write_data(self, session):
         """
         @Function: Write Data
         """
@@ -62,6 +62,6 @@ class Pipeline():
         """
         @Function : Execute Pipeline
         """
-        self.loadData(session)
-        self.transformData(session)
-        self.writeData(session)
+        self.load_data(session)
+        self.transform_data(session)
+        self.write_data(session)

@@ -36,7 +36,7 @@ def test_get_logLevel():
     load_dotenv('test/test_env.env') 
     os.environ['CODE_DIR_PATH']='test'
     tm_logger = TMLogger("test/log_config.yaml")
-    assert None != tm_logger.get_logLevel
+    assert None != tm_logger.get_log_level
 
 def test_init_withWrongFile():
     load_dotenv('test/test_env.env') 

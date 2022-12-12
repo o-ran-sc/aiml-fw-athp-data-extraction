@@ -32,7 +32,7 @@ class InfluxSource(Source):
         """
         @Method: Single Arg Constructor
         """
-        self.ClassType="Custom"
+        self.class_type="Custom"
         self.flavour=classflavour
         self.logger  = None
         self.classconfig  = None

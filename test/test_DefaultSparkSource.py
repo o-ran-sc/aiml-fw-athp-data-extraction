@@ -35,7 +35,7 @@ class Spark_helper:
         self.test_result = False
         self.read = helper2()
     
-    def addConf(self, key, value):
+    def add_conf(self, key, value):
         self.test_result = True
     
     def load(self):

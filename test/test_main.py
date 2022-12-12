@@ -29,9 +29,9 @@ sys.path.extend(["dataextraction/"]) # In order to import dataextraction functio
 
 
 import main
-from SparkHelper import sparkSessionManager
+from SparkHelper import SparkSessionManager
 from Pipeline import Pipeline
-from main import task
+from main import Task
 
 
 
@@ -66,7 +66,7 @@ class Test_task_status:
      
     def test_task_status(self):  
         request_json = {'source': {'InfluxSource': {'query': 'from(bucket:"UEData") |> range(start: 0, stop: now()) |> filter(fn: (r) => r._measurement == "liveCell") |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")'}}, 'transform': [{'operation': 'SQLTransform', 'FeatureList': '*', 'SQLFilter': ''}], 'sink': {'CassandraSink': {'CollectionName': 'last_check3'}}}
-        main.task_map["unittest_task"] = task(request_json ,"Accepted")
+        main.task_map["unittest_task"] = Task(request_json ,"Accepted")
         response = self.client.get("/task-status/unittest_task")
         main.task_map.clear()
         assert response.content_type ==  'application/json'
@@ -75,7 +75,7 @@ class Test_task_status:
     #Error test
     def test_negative_task_status(self):  
         request_json = {'source': {'InfluxSource': {'query': 'from(bucket:"UEData") |> range(start: 0, stop: now()) |> filter(fn: (r) => r._measurement == "liveCell") |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")'}}, 'transform': [{'operation': 'SQLTransform', 'FeatureList': '*', 'SQLFilter': ''}], 'sink': {'CassandraSink': {'CollectionName': 'last_check3'}}}
-        main.task_map["unittest_task"] = task(request_json ,"Error")
+        main.task_map["unittest_task"] = Task(request_json ,"Error")
         response = self.client.get("/task-status/unittest_task")
         main.task_map.clear()
        
@@ -96,7 +96,7 @@ class Test_delete_task_status:
 
     def test_delete_task_status(self):
         request_json = {'source': {'InfluxSource': {'query': 'from(bucket:"UEData") |> range(start: 0, stop: now()) |> filter(fn: (r) => r._measurement == "liveCell") |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")'}}, 'transform': [{'operation': 'SQLTransform', 'FeatureList': '*', 'SQLFilter': ''}], 'sink': {'CassandraSink': {'CollectionName': 'last_check3'}}}
-        main.task_map["unittest_task"] = task(request_json ,"Accepted")
+        main.task_map["unittest_task"] = Task(request_json ,"Accepted")
         response = self.client.delete("/delete-task-status/unittest_task")
         main.task_map.clear()
         assert response.content_type ==  'application/json'
@@ -112,8 +112,8 @@ class Test_async_code_worker:
     def setup_method(self):
         self.client = main.app.test_client(self)
     
-    @patch('main.session_helper.getSession')
-    @patch('main.factory.getBatchPipeline')
+    @patch('main.session_helper.get_session')
+    @patch('main.factory.get_batch_pipeline')
     def test_negative_async_code_worker_1(self,mock1,mock2):
         
         main.infinte_loop_config["infinte_run"]= "True"
