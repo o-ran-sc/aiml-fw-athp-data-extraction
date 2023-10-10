@@ -24,6 +24,7 @@ import importlib
 from lru import LRU
 from ConfigHelper import ConfigHelper
 from Pipeline import Pipeline
+from source.InfluxSource import InfluxSource
 
 class FeatureEngineeringFactory():
     """
@@ -39,6 +40,7 @@ class FeatureEngineeringFactory():
         self.modulename = ""
         self.default_class = ""
         self.hash_table = LRU(10)
+        self.influxdb_dict={}
         self.logger.debug("************Starting Init FeatureEngineeringFactory***********")
         try:
             self.spark_session = spark_manager
@@ -68,7 +70,12 @@ class FeatureEngineeringFactory():
             my_class = getattr(importlib.import_module(self.modulename+"."+self.default_class), self.default_class)
             my_classinstance = my_class(my_classorflavour)
         self.logger.debug("Initialization of Class")
-        my_classinstance.init(self.spark_session, self.config_help, inputs_to_class)
+        # if the tm sends the influx_db info dict
+        if len(self.influxdb_dict)!=0 and baseclass_name=="Source":
+            my_classinstance.init_dynamic(self.spark_session, self.config_help, inputs_to_class, self.influxdb_dict)
+        else :
+        #when the tm does not sends the influx_db dict  
+            my_classinstance.init(self.spark_session, self.config_help, inputs_to_class)
         return my_classinstance
         
         
@@ -95,12 +102,13 @@ class FeatureEngineeringFactory():
         return my_instancelist
         
         
-    def get_batch_pipeline(self, source_classdict, transform_classdict, sink_classdict, caching_key):
+    def get_batch_pipeline(self, source_classdict, transform_classdict, sink_classdict, influxdb_dict, caching_key):
         """
         @Function: Makes to get Batch Pipeline
         @ Input  : source Classess, Sink Classess, Transform Classess
         @Output  : Instance of Pipeline Object
         """
+        self.influxdb_dict= influxdb_dict
         if self.hash_table.get(caching_key) is None:
             self.logger.debug("Cached Instance Not Found, Creating Instance, Key" + caching_key)
             source_instancelist = None

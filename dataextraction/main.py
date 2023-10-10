@@ -168,9 +168,10 @@ def async_code_worker():
             source_dict = request_json["source"]
             transform_dict = request_json["transform"]
             sink_dict = request_json["sink"]
+            influxdb_dict= request_json["influxdb_info"]
             c_key = str(source_dict)+str(transform_dict)+str(sink_dict)
             logger.debug(c_key)
-            feature_engineering_pipeline = factory.get_batch_pipeline(source_dict, transform_dict, sink_dict, c_key)
+            feature_engineering_pipeline = factory.get_batch_pipeline(source_dict, transform_dict, sink_dict, influxdb_dict, c_key)
             session = session_helper.get_session()
             feature_engineering_pipeline.load_data(session)
             feature_engineering_pipeline.transform_data(session)
