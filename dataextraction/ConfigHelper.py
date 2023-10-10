@@ -246,3 +246,6 @@ class ConfigHelper(metaclass=Singleton):
         Function: Get FS Port
         """
         return self.fs_dict['fs_port']
+    
+    def getSourceUrl(self):
+        return self.configsource['InfluxSource']['url']
