@@ -45,13 +45,13 @@ class helper:
 
 class Test_Pipeline:
     def setup_method(self):
-        api_json = {'source': {'InfluxSource': {'query': 'from(bucket:"UEData") |> range(start: 0, stop: now()) |> filter(fn: (r) => r._measurement == "liveCell") |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")'}}, 'transform': [{'operation': 'SQLTransform', 'FeatureList': '*', 'SQLFilter': ''}], 'sink': {'CassandraSink': {'CollectionName': 'last_check4'}}}
+        api_json = {'source': {'InfluxSource': {'query': 'from(bucket:"UEData") |> range(start: 0, stop: now()) |> filter(fn: (r) => r._measurement == "liveCell") |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")'}}, 'transform': [{'operation': 'SQLTransform', 'FeatureList': '*', 'SQLFilter': ''}], 'sink': {'CassandraSink': {'CollectionName': 'last_check4'}}, 'influxdb_info': {'host': '10.0.0.53', 'port': '31812', 'token': 'ELh0GwrCJ81PSvc0a4v65kBF47voao7LrNKVtlV9i5UM-rzs1vpnCLtRD1Cwu7XHSn3GGWlvmJX4G9cnxs-M6g==', 'dmeport': '31823', 'source_name': 'qoedataset0510202301', 'org_name': 'est', 'bucket': 'pm-logg-bucket'}}
         load_dotenv('test/test_env.env')
         os.environ['CODE_DIR_PATH'] = 'test'
         session_helper = SparkSessionManager()
         factory = FeatureEngineeringFactory(session_helper)
-        (source_dict, transform_dict, sink_dict) = (api_json['source'], api_json['transform'], api_json['sink'])
-        self.obj = factory.get_batch_pipeline(source_dict, transform_dict, sink_dict, str(source_dict) + str(transform_dict) + str(sink_dict))
+        (source_dict, transform_dict, sink_dict, influxdb_dict) = (api_json['source'], api_json['transform'], api_json['sink'], api_json['influxdb_info'])
+        self.obj = factory.get_batch_pipeline(source_dict, transform_dict, sink_dict, influxdb_dict,str(source_dict) + str(transform_dict) + str(sink_dict))
         self.spark_session = session_helper
 
     

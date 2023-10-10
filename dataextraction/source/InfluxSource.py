@@ -64,6 +64,23 @@ class InfluxSource(Source):
             self.logger.debug("Set variable query"+ self.query)
         else:
             self.logger.error("Expected variable query"+ self.query)
+
+    def init_dynamic(self, sparkhelper, confighelper, inputdict, influxdb_dict):
+        self.logger  = confighelper.getLogger()
+        self.logger.debug("the init_dynamic is called")
+        classconfig  = confighelper.getClassConfig(self)
+        self.url     = f"http://{influxdb_dict['host']}:{influxdb_dict['port']}"
+        self.token   = influxdb_dict["token"]
+        self.org     = influxdb_dict["org_name"]
+        self.timeout = 100000
+        self.ssl     = False
+        self.query   = classconfig["Query"]
+        if "query" in inputdict.keys():
+            self.query = inputdict["query"]
+            self.logger.debug("Set variable query"+ self.query)
+        else:
+            self.logger.error("Expected variable query"+ self.query)
+
     def load(self,sparksession):
         """
         @Method: init
