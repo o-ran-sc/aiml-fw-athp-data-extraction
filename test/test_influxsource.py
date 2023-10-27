@@ -53,6 +53,14 @@ class Test_InfluxSource():
         input_dict = {'dummy-key': 'dummy-value'}
         influx_source_obj.init(None, fsConf, input_dict)
         assert influx_source_obj.logger != None, "Influx Source Object Creation Failed"
+    
+    def test_init_dynamic(self):
+        influx_source_obj=InfluxSource("InfluxDb")
+        fsconf= ConfigHelper()
+        input_dict = {'query': 'Select * from last_check3'}
+        influx_db_dict={'host': 'dummy-value', 'port':'dummy-value', 'token': '', 'db_org':''}
+        influx_source_obj.init_dynamic(None, fsconf, input_dict, influx_db_dict)
+        assert influx_source_obj.logger != None, "Influx Source Object Creation Failed"
 
     @patch('source.InfluxSource.InfluxDBClient')
     def test_load(self, mock1):
