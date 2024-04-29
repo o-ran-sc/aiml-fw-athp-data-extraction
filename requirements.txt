@@ -9,4 +9,4 @@ jsonpickle==2.0.0
 Flask==2.0.1
 Flask-API==3.0.post1
 Flask-RESTful==0.3.9
-PyYAML==3.12
+PyYAML
