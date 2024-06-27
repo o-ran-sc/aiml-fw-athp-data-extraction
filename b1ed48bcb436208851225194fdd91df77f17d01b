@@ -1,0 +1,8 @@
+Verified+1: ORAN Required GHA <releng+oran.required.gha@linuxfoundation.org>
+Code-Review+2: Rajdeep Singh <rajdeep.sin@samsung.com>
+Verified+1: Rajdeep Singh <rajdeep.sin@samsung.com>
+Submitted-by: Rajdeep Singh <rajdeep.sin@samsung.com>
+Submitted-at: Thu, 27 Jun 2024 12:00:53 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/aiml-fw/athp/data-extraction/+/13081
+Project: aiml-fw/athp/data-extraction
+Branch: refs/heads/master
