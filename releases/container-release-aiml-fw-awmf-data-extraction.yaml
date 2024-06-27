@@ -1,11 +1,11 @@
 ---
 #Release tag for data-extraction
 distribution_type: container
-container_release_tag: 1.2.0
+container_release_tag: 2.0.0
 container_pull_registry: nexus3.o-ran-sc.org:10004
 container_push_registry: nexus3.o-ran-sc.org:10002
 project: aiml-fw/athp/data-extraction
-ref: 8197503ce824e9bf80567d3dbef59d954baf23dd
+ref: 40a30fe9b0e0b5ddbd02c41f623a11d92b465ab0
 containers:
     - name: aiml-fw-athp-data-extraction-docker
-      version: 1.0.0
+      version: 2.0.0
