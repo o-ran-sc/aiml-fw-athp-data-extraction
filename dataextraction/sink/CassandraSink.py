@@ -27,7 +27,7 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 import time
 import json
-from pyspark.sql.functions import monotonically_increasing_id 
+from pyspark.sql.functions import lit, to_timestamp
 
 
 class CassandraSink(Sink):
@@ -98,10 +98,10 @@ class CassandraSink(Sink):
         """
         self.logger.debug("Data writing to Sink " + self.flavour)
         self.create_table(sparkdf)
-        sparkdf = sparkdf.select("*").withColumn("__Id", monotonically_increasing_id())
-        
-        
-        
+        sparkdf = sparkdf.select("*").withColumn("partition_key", lit('1'))
+
+
+
         write_options = {
             "table": self.tableName,
             "keyspace": self.keyspace,
@@ -118,7 +118,7 @@ class CassandraSink(Sink):
         self.logger.debug(
             "*** Data written to Sink *** " + self.keyspace + "." + self.tableName
         )
-        
+
 
 
     def create_table(self, sparkdf):
@@ -136,10 +136,10 @@ class CassandraSink(Sink):
         session_default.execute(create_ks_query)
 
         session = cluster.connect(self.keyspace)
-        
-        
+
+
         session.execute(self.buildDeleteTable())
-        
+
         query = self.buildCreateTable(sparkdf)
         session.execute(query)
         time.sleep(3)
@@ -148,18 +148,22 @@ class CassandraSink(Sink):
     def buildCreateTable(self, sparkdf):
         """
         Builds simple cassandra query for creating table.
-        Columns names as per sparkdf headers, choosing first header __Id in sparkdf
-        as primary key for table
+        Columns names as per sparkdf headers,
+        choosing first header partition_key in sparkdf as partition key,
+        choosing second header _time as clustering key for table
         """
-        query = "CREATE TABLE " + self.tableName + " ( \"__Id\" BIGINT,"
+        query = "CREATE TABLE " + self.tableName + ' ( "partition_key" text,'
         if sparkdf is not None:
             col_list = sparkdf.schema.names
             # To maintain the column name case sensitivity
             for col in col_list:
-                query = query + ' "' + str(col) + '"' + " text " + ","
+                if col == '_time':
+                    query = query + ' "' + str(col) + '" timestamp ' + ","
+                else:
+                    query = query + ' "' + str(col) + '" text ' + ","
 
-        # Creating __Id column as Primary Key
-        query = query + "PRIMARY KEY(" + '"__Id"' + "));"
+        # Creating partition_key column as Partition Key, _time as Clustering Key
+        query = query + 'PRIMARY KEY (("partition_key"), "_time"));'
         self.logger.debug("Create table query " + query)
         return query
 

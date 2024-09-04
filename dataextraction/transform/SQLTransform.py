@@ -30,7 +30,7 @@ class SQLTransform(Transform):
         self.logger = None
         self.sqlstatement = None
         self.flavour=classflavour
-        
+
     def init(self, sparkhelper, confighelper, inputdict):
         """
         @Method: init
@@ -40,16 +40,16 @@ class SQLTransform(Transform):
         feat_list = self.get_feature_list(inputdict["FeatureList"])
         self.sqlstatement = "SELECT " + feat_list + " FROM __THIS__ "
         if "SQLFilter" in inputdict.keys():
-            self.sqlstatement = self.sqlstatement+ "WHERE " + inputdict["SQLFilter"] 
-        
+            self.sqlstatement = self.sqlstatement+ "WHERE " + inputdict["SQLFilter"]
+
         self.logger.debug(" The ML LIB SQL to be executed is " + self.sqlstatement)
-        
+
     def get_feature_list(self,features_str):
         """
             Wraps all feature argument inside `` character,
             to handle any spaces inside feature names
-        """            
-        q_features = ""
+        """
+        q_features = "`_time`,"
         if ( features_str is not None) and len(features_str.strip()) and (features_str.strip() != '*' ):
             features = features_str.split(',')
             for feature in features:
@@ -58,8 +58,8 @@ class SQLTransform(Transform):
         else:
             q_features = features_str
 
-        return q_features     
-       
+        return q_features
+
     def transform(self, sparksession, sparkdf):
         """
         @Method: transform
