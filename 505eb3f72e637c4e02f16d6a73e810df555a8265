@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7a7a245_d5d69967",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-05T00:10:19Z",
+      "side": 1,
+      "message": "Thank you for the contribution! PTAL!",
+      "revId": "505eb3f72e637c4e02f16d6a73e810df555a8265",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b1a603c_e0fa4317",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-05T00:10:19Z",
+      "side": 1,
+      "message": "There\u0027s a recommendation for the partition size. Is it fine to assign `1` to partition_key?\n\n[*The two measures of partition size are the number of values in a partition and partition size on disk. Though requirements for these measures may vary based on the application a general guideline is to keep number of values per partition to below 100,000 and disk space per partition to below 100MB.*](https://cassandra.apache.org/doc/stable/cassandra/data_modeling/intro.html#data-model-analysis)",
+      "revId": "505eb3f72e637c4e02f16d6a73e810df555a8265",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89dc8819_3fcfdae9",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-05T00:10:19Z",
+      "side": 1,
+      "message": "I think `PRIMARY KEY` should be `((\"__partition_key\"), \"__time\", \"__Id\")` since the same time data can come.",
+      "revId": "505eb3f72e637c4e02f16d6a73e810df555a8265",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
