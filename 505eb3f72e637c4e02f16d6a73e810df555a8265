@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "01a00394_564aa295",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2024-09-05T05:13:43Z",
+      "side": 1,
+      "message": "I agree with that putting all the data into a single partition is not good.\n\nI have considered partitioning the data by date. However, the problem is that Cassandra does not support sorting data by time within a partition. For example, after the last entry of the 2023-09-05 partition, the first entry of the 2023-10-04 partition could suddenly appear. In such cases, sorting the data would have to be done at the feature_store_sdk stage.\n\nWhat do you think about using InfluxDB for cases where the time order is important, and using Cassandra for other cases?",
+      "parentUuid": "7b1a603c_e0fa4317",
+      "revId": "505eb3f72e637c4e02f16d6a73e810df555a8265",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "89dc8819_3fcfdae9",
         "filename": "dataextraction/sink/CassandraSink.py",
         "patchSetId": 1
