@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b9f2617_749992c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-06T01:48:00Z",
+      "side": 1,
+      "message": "I appreciate your time and efforts. Although there are still some imperfections, but it looks good as an intermediate step.",
+      "revId": "5f955eaff459e6f8a68a1143d3cf7ae6b1da436e",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b18b51a4_f2962d88",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-06T01:48:00Z",
+      "side": 1,
+      "message": "It should be revised to `_partition_key`.",
+      "revId": "5f955eaff459e6f8a68a1143d3cf7ae6b1da436e",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a017ee37_3cc7cfbc",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-06T01:48:00Z",
+      "side": 1,
+      "message": "It should be revised to `_time` and `_Id`.",
+      "revId": "5f955eaff459e6f8a68a1143d3cf7ae6b1da436e",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
