@@ -2,7 +2,7 @@ pyspark==3.1.2
 cassandra-driver==3.25.0
 json5==0.9.6
 influxdb-client==1.20.0
-pandas==1.1.5
+pandas==2.2.2
 importlib-metadata==4.8.1
 lru-dict==1.1.7
 jsonpickle==2.0.0
@@ -10,3 +10,5 @@ Flask==2.0.1
 Flask-API==3.0.post1
 Flask-RESTful==0.3.9
 PyYAML
+Werkzeug==2.2.2
+urllib3~=1.26.15
