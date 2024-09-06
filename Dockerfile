@@ -15,9 +15,7 @@
 #   limitations under the License.
 #
 # ==================================================================================
-#Base Image
-FROM nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-ubuntu18-c-go:1.9.0 as ubuntu
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 # location in the container
 ENV TA_DIR /home/app/
@@ -33,7 +31,7 @@ RUN apt-get update && \
     apt-get clean;
 	
 RUN apt-get update && \
-    apt-get install scala=2.11.12-4~18.04 -y && \
+    apt-get install scala -y && \
     apt-get clean;
     
 # Setup JAVA_HOME -- useful for docker commandline
