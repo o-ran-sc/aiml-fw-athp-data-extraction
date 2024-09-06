@@ -35,6 +35,24 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22782646_e8a9d2cc",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2024-09-06T03:20:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b18b51a4_f2962d88",
+      "revId": "5f955eaff459e6f8a68a1143d3cf7ae6b1da436e",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a017ee37_3cc7cfbc",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-09-06T01:48:00Z",
       "side": 1,
       "message": "It should be revised to `_time` and `_Id`.",
+      "revId": "5f955eaff459e6f8a68a1143d3cf7ae6b1da436e",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbabc098_beb0ef07",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2024-09-06T03:20:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a017ee37_3cc7cfbc",
       "revId": "5f955eaff459e6f8a68a1143d3cf7ae6b1da436e",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
