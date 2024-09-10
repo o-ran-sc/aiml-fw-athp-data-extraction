@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf862466_1d0df622",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-10T09:03:33Z",
+      "side": 1,
+      "message": "Please fix the [failed unit test](https://github.com/o-ran-sc/aiml-fw-athp-data-extraction/blob/master/test/test_cassandrasink.py#L77).",
+      "revId": "ff8e6a082a8365f14ed84dcbb13520c1238be052",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

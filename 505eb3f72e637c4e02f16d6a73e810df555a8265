@@ -53,6 +53,24 @@
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcb3304e_05a3978d",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-10T09:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a00394_564aa295",
+      "revId": "505eb3f72e637c4e02f16d6a73e810df555a8265",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89dc8819_3fcfdae9",
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "Hello @subhash, yes, it is possible.\n\nIn the ipynb file where you create the pipeline, I could fetch __Id along with other features as follows:\n\n```python\nfeatures \u003d fs_sdk.get_features(trainingjobName, [\u0027FEATURE1\u0027, \u0027FEATURE2\u0027, \u0027__Id\u0027])\n```\n\nThen, I could sort the data with:\n\n```python\nfeatures \u003d features.sort_values(by\u003d\"Id\")\n```",
       "parentUuid": "65619965_ea4dd289",
+      "revId": "505eb3f72e637c4e02f16d6a73e810df555a8265",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be17aa22_3e4bc5a5",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2024-09-10T09:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4abb2654_6b77f268",
       "revId": "505eb3f72e637c4e02f16d6a73e810df555a8265",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
