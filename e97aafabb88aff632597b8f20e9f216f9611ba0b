@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed4b6766_3f9e8209",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2024-09-30T10:34:23Z",
+      "side": 1,
+      "message": "We think, `_time` could be avoided as we are storing all the entries in one partition `lit(1)` so `_Id` as clustering key could be sufficient for sorting the datapoints.\n\nAlso could you please clarify reason for using `_time` and `_id` together.",
+      "range": {
+        "startLine": 166,
+        "startChar": 58,
+        "endLine": 166,
+        "endChar": 72
+      },
+      "revId": "e97aafabb88aff632597b8f20e9f216f9611ba0b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
