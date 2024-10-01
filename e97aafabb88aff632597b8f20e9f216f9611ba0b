@@ -70,6 +70,30 @@
       },
       "revId": "e97aafabb88aff632597b8f20e9f216f9611ba0b",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34283456_8e11c0d3",
+        "filename": "dataextraction/sink/CassandraSink.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2024-10-01T14:02:37Z",
+      "side": 1,
+      "message": "@Subash, I understand your point clearly. Since _Id is enough as the only clustering key, I’ve removed _time\n\nI have uploaded patchset 6, but I couldn’t test it completely. There seems to be an issue with the current version of pandas, so I think it’s better to resolve this issue first and then test again.",
+      "parentUuid": "4a486922_e5942971",
+      "range": {
+        "startLine": 166,
+        "startChar": 58,
+        "endLine": 166,
+        "endChar": 72
+      },
+      "revId": "e97aafabb88aff632597b8f20e9f216f9611ba0b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }
