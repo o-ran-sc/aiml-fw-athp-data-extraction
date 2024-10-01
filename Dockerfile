@@ -25,17 +25,17 @@ RUN apt-get update && apt-get install -y \
     python3 && apt-get install -y \
     python3-pip
 
-# Install OpenJDK-8 for Spark
+# Install OpenJDK-11 for Spark
 RUN apt-get update && \
-    apt-get install openjdk-8-jre openjdk-8-jdk -y && \
+    apt-get install openjdk-11-jre openjdk-11-jdk -y && \
     apt-get clean;
-	
+
 RUN apt-get update && \
     apt-get install scala -y && \
     apt-get clean;
-    
+
 # Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 RUN export JAVA_HOME
 
 WORKDIR ${TA_DIR}
