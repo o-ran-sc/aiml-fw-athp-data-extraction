@@ -1,7 +1,7 @@
-pyspark==3.1.2
+pyspark==3.5.3
 cassandra-driver==3.25.0
 json5==0.9.6
-influxdb-client==1.20.0
+influxdb-client==1.46.0
 pandas==2.2.2
 importlib-metadata==4.8.1
 lru-dict==1.1.7
