@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93cdd001_177befca",
+        "filename": "Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2024-11-27T18:23:05Z",
+      "side": 1,
+      "message": "avoid `\u003d` to look similar. Any specific reason to avoid it.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "df04248a62af051f0fbcc682937861a0f5cf310c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f83065ab_9e6b887d",
+        "filename": "Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000475
+      },
+      "writtenOn": "2024-11-27T18:23:05Z",
+      "side": 1,
+      "message": "any difference with previous changes.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "df04248a62af051f0fbcc682937861a0f5cf310c",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
