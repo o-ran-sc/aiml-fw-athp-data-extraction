@@ -48,14 +48,17 @@ class Task():
     """
     Task Class
     """
-    def __init__(self, task, task_status ):
+    def __init__(self, task, task_status, trainingjob_id ):
         """
         TaskName
         """
         self.task = task
         self.status = task_status
         self.task_error = None
+        self.trainingjob_id = trainingjob_id
+
 app = Flask(__name__)
+
 @app.route('/feature-groups', methods=['POST'])
 def post_handle():
     """
@@ -82,10 +85,11 @@ def post_handle():
     response_code = status.HTTP_200_OK
     try:
         task_id = str(request_json["sink"]["CassandraSink"]["CollectionName"])
+        trainingjob_id = str(request_json["trainingjob_id"])
         api_result_msg = "/task-status/"+task_id
         logger.debug("Generated ID"+task_id)
         tasks.put(task_id)
-        task_map[task_id] = Task(request_json ,"Accepted")
+        task_map[task_id] = Task(request_json ,"Accepted", trainingjob_id)
         logger.debug("Generated ID"+task_id)
     except Exception as exc:
         api_result_msg = str(exc)
@@ -95,12 +99,15 @@ def post_handle():
     
     response = app.response_class(response=json.\
             dumps(\
-        { "trainingjob_name":request_json["sink"]["CassandraSink"]["CollectionName"],\
-        "result" : api_result_msg }),\
+        { "featurepath":request_json["sink"]["CassandraSink"]["CollectionName"],\
+        "result" : api_result_msg, "trainingjob_id": trainingjob_id }),\
         status= response_code,mimetype=default_mime_type)
+    
     end_time = datetime.datetime.now()
+    
     logger.info(str(end_time-start_time)+' API call finished')
     return response
+
 @app.route('/task-status/<task_id>', methods=['GET'])
 def get_task_status(task_id):
     """
@@ -108,6 +115,7 @@ def get_task_status(task_id):
     """
     try:
         taskstatus = task_map[task_id].status
+        trainingjob_id = task_map[task_id].trainingjob_id
         response_code = status.HTTP_200_OK
         api_result_msg = "Data Pipeline Execution "+taskstatus
         if taskstatus == "Error":
@@ -119,9 +127,10 @@ def get_task_status(task_id):
         taskstatus = "Error"
 
     response = app.response_class(response=json.dumps(
-        { "task_status":taskstatus,"result" : api_result_msg }),
+        { "task_status":taskstatus,"result" : api_result_msg , "trainingjob_id":trainingjob_id}),
         status= response_code,mimetype=default_mime_type)
     return response
+
 @app.route('/task-statuses', methods=['GET'])
 def get_task_statuses():
     """
