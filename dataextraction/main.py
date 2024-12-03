@@ -56,6 +56,7 @@ class Task():
         self.status = task_status
         self.task_error = None
 app = Flask(__name__)
+
 @app.route('/feature-groups', methods=['POST'])
 def post_handle():
     """
@@ -82,6 +83,7 @@ def post_handle():
     response_code = status.HTTP_200_OK
     try:
         task_id = str(request_json["sink"]["CassandraSink"]["CollectionName"])
+        trainingjob_id = str(request_json["trainingjob_id"])
         api_result_msg = "/task-status/"+task_id
         logger.debug("Generated ID"+task_id)
         tasks.put(task_id)
@@ -95,12 +97,13 @@ def post_handle():
     
     response = app.response_class(response=json.\
             dumps(\
-        { "trainingjob_name":request_json["sink"]["CassandraSink"]["CollectionName"],\
-        "result" : api_result_msg }),\
+        { "featuregroup_name":request_json["sink"]["CassandraSink"]["CollectionName"],\
+        "result" : api_result_msg, "trainingjob_id": trainingjob_id }),\
         status= response_code,mimetype=default_mime_type)
     end_time = datetime.datetime.now()
     logger.info(str(end_time-start_time)+' API call finished')
     return response
+
 @app.route('/task-status/<task_id>', methods=['GET'])
 def get_task_status(task_id):
     """
