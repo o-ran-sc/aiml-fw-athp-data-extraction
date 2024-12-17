@@ -1,0 +1,11 @@
+Code-Review+1: Rajdeep Singh <rajdeep.sin@samsung.com>
+Code-Review+2: subhash kumar singh <subh.singh@samsung.com>
+Verified+1: subhash kumar singh <subh.singh@samsung.com>
+Verified+1: ORAN Required GHA <releng+oran.required.gha@linuxfoundation.org>
+Verified+1: o-ran-sc release <collab-it+o-ran-sc-release@linuxfoundation.org>
+Verified+1: Rajdeep Singh <rajdeep.sin@samsung.com>
+Submitted-by: subhash kumar singh <subh.singh@samsung.com>
+Submitted-at: Tue, 17 Dec 2024 12:46:25 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/aiml-fw/athp/data-extraction/+/13786
+Project: aiml-fw/athp/data-extraction
+Branch: refs/heads/master
