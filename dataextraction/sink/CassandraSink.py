@@ -156,7 +156,7 @@ class CassandraSink(Sink):
         choosing _partition_key in sparkdf as partition key,
         _Id as clustering key for table
         """
-        query = "CREATE TABLE " + self.tableName + ' ( "_partition_key" text, "_Id" bigint, '
+        query = 'CREATE TABLE "' + self.tableName + '" ( "_partition_key" text, "_Id" bigint, '
         if sparkdf is not None:
             col_list = sparkdf.schema.names
             # To maintain the column name case sensitivity
@@ -172,7 +172,7 @@ class CassandraSink(Sink):
         """
         Builds simple cassandra query for deleting table
         """
-        query = "DROP TABLE IF EXISTS  " + self.tableName + " ;"
+        query = 'DROP TABLE IF EXISTS "' + self.tableName + '" ;'
         self.logger.debug("Delete table query " + query)
         return query
 
