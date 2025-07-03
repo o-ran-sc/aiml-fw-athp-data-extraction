@@ -26,16 +26,39 @@ Version history
 | 2023-12-14         | 1.2.0              | Sandeep Jaisawal   | I release          |
 |                    |                    |                    |                    |
 +--------------------+--------------------+--------------------+--------------------+
-
+| 2025-07-03         | 4.0.0              | Swaraj Kumar       | L release          |
+|                    |                    |                    |                    |
++--------------------+--------------------+--------------------+--------------------+
 
 Summary
 -------
 
-The I release of AIMLFW Data extraction module supports the enhanced version of data extraction for training from databases like Influx DB
+The L release of AIMLFW Data extraction module supports the enhanced version of data extraction for training from databases like Influx DB
 
 
 Release Data
 ------------
+
+L Release
+---------
+
++--------------------------------------+-------------------------------------------+
+| **Project**                          | AIMLFW Data extraction                    |
+|                                      |                                           |
++--------------------------------------+-------------------------------------------+
+| **Repo/commit-ID**                   | aiml-fw/athp/data-extraction              |
+|                                      | /df5f04ae21484eb2aa5316ef6376165a87a2f3bf |
++--------------------------------------+-------------------------------------------+
+| **Release designation**              | L release                                 |
+|                                      |                                           |
++--------------------------------------+-------------------------------------------+
+| **Release date**                     | 2025-07-03                                |
+|                                      |                                           |
++--------------------------------------+-------------------------------------------+
+| **Purpose of the delivery**          | Maintenance                               |
+|                                      |                                           |
++--------------------------------------+-------------------------------------------+
+
 
 I Release
 ---------
