@@ -83,10 +83,100 @@ jobs:
       TOX_ENVS: '["code"]'
       PYTHON_VERSION: '3.10'
 
+  component-test:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+      - name: Gerrit checkout
+        # yamllint disable-line rule:line-length
+        uses: lfreleng-actions/checkout-gerrit-change-action@54d751e8bd167bc91f7d665dabe33fae87aaaa63 # v0.9
+        with:
+          gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
+          gerrit-project: ${{ inputs.GERRIT_PROJECT }}
+          gerrit-url: ${{ vars.GERRIT_URL }}
+          delay: "0s"
+          ref: refs/heads/${{ inputs.GERRIT_BRANCH }}
+
+      - name: Clone dep repo
+        run: git clone https://github.com/o-ran-sc/aiml-fw-aimlfw-dep.git
+
+      - name: Build Docker image
+        run: |
+          docker build -t data-extraction:latest .
+
+      - name: Create KinD cluster
+        uses: helm/kind-action@v1.8.0
+        with:
+          cluster_name: ci-sample
+
+      - name: Wait for nodes ready
+        run: kubectl wait --for=condition=Ready nodes --all --timeout=120s
+      
+      - name: Setup helm
+        run: |
+          cd aiml-fw-aimlfw-dep
+          ./bin/install_common_templates_to_helm.sh
+      
+      - name: Load Docker image into Kind
+        run: kind load docker-image data-extraction:latest --name ci-sample
+      
+      - name: create traininghost namespace
+        run: kubectl create namespace traininghost
+
+      - name: Mock secrets for data-extraction
+        run: |
+          set -euo pipefail
+          NAMESPACE=traininghost
+
+          echo "Creating namespace if missing..."
+          kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+
+          echo "Creating mock secret: cassandra"
+          kubectl create secret generic cassandra -n $NAMESPACE \
+          --from-literal=cassandra-password='cassandra-pwd'
+
+      - name: install data-extraction
+        run: |
+          cd aiml-fw-aimlfw-dep
+          helm dep up helm/data-extraction
+          helm install data-extraction helm/data-extraction -f RECIPE_EXAMPLE/example_recipe_local_images_oran_latest.yaml
+
+      - name: Wait for data-extraction pod ready
+        run: |
+          set -euo pipefail
+          NAMESPACE=traininghost
+
+          echo "Checking pod status before waiting..."
+          kubectl get pods -n $NAMESPACE -o wide || true
+
+          echo "Describing any non-running pods (pre-check)..."
+          kubectl get pods -n $NAMESPACE --no-headers | awk '$3 != "Running" {print $1}' | \
+            xargs -r -I {} kubectl describe pod {} -n $NAMESPACE || true
+
+          echo "Waiting for all pods in namespace '$NAMESPACE' to be Ready (max 300s)..."
+          if ! kubectl wait --for=condition=Ready pod --namespace $NAMESPACE --all --timeout=300s; then
+            echo "Timeout waiting for pods. Dumping debug info..."
+            echo "Current pod states:"
+            kubectl get pods -n $NAMESPACE -o wide || true
+            echo "Recent events:"
+            kubectl get events -n $NAMESPACE --sort-by=.lastTimestamp | tail -n 20 || true
+            exit 1
+          fi
+
+          echo "All pods in '$NAMESPACE' are Ready."
+          echo "Final pod status:"
+          kubectl get pods -n $NAMESPACE -o wide
+
+      - name: list data-extraction pod
+        run: kubectl get pods -n traininghost
+    
+
   vote:
     if: ${{ always() }}
     # yamllint enable rule:line-length
-    needs: [prepare, call-gerrit-tox-verify]
+    needs: [prepare, call-gerrit-tox-verify, component-test]
     runs-on: ubuntu-latest
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
