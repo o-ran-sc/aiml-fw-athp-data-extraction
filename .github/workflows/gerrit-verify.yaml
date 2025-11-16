@@ -82,6 +82,7 @@ jobs:
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
       TOX_ENVS: '["code"]'
       PYTHON_VERSION: '3.10'
+      PARALLEL: 1
 
   component-test:
     needs: prepare
