@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79188209_9b231162",
+        "filename": "component-testing/tests/test_component.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002137
+      },
+      "writtenOn": "2025-11-17T00:27:43Z",
+      "side": 1,
+      "message": "Please check the indentation.",
+      "revId": "c180abf471d5edd9f04f7da5f752d9c23a52609b",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
