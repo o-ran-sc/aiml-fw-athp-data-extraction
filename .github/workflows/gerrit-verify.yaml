@@ -108,7 +108,7 @@ jobs:
           docker build -t data-extraction:latest .
 
       - name: Create KinD cluster
-        uses: helm/kind-action@v1.8.0
+        uses: helm/kind-action@v1.13.0
         with:
           cluster_name: ci-sample
 
